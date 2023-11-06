@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "gyndowind",
-    "version": "0.0.0"
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
@@ -16,6 +16,36 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "notification": {
+        "all": true
+      },
+      "http": {
+        "all": true,
+        "scope": [
+          "https://**",
+          "http://**"
+        ]
+      },
+      "fs": {
+        "all": true,
+        "scope": [
+          "$RESOURCE/config/*"
+        ]
+      },
+      "dialog": {
+        "all": true
+      },
+      "window": {
+        "all": false,
+        "close": true,
+        "hide": true,
+        "show": true,
+        "maximize": true,
+        "minimize": true,
+        "unmaximize": true,
+        "unminimize": true,
+        "startDragging": true
       }
     },
     "bundle": {
@@ -36,10 +66,12 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": true,
+        "resizable": false,
         "title": "gyndowind",
-        "width": 800,
-        "height": 600
+        "width": 780,
+        "height": 470,
+        "decorations": false,
+        "transparent": true
       }
     ]
   }
