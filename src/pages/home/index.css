@@ -1,0 +1,17 @@
+.home-container {
+    height: 100%;
+    display: flex;
+    user-select: none;
+}
+
+.left-container {
+    height: 100%;
+    width: 500px;
+    border-right: 2px solid #E3DFDF;
+}
+
+.right-container {
+    height: 100%;
+    flex-grow: 1;
+    border-right: 2px solid #E3DFDF;
+}
