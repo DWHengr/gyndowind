@@ -1,0 +1,16 @@
+.tunnel-list-item {
+    height: 80px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+
+    .ant-switch-checked:nth-child(1) {
+        background-color: #060C21;
+    }
+
+    .ant-switch-checked:hover:nth-child(1) {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+}
