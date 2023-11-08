@@ -22,7 +22,7 @@ export default function TunnelListItem() {
         <>
             <div className="tunnel-list-item">
                 <div style={{marginRight: 10, marginLeft: 10, width: "100%", display: "flex"}}>
-                    <div style={{width: 360}}>
+                    <div style={{width: 370}}>
                         <div style={{display: "flex", alignItems: 'center'}}>
                             <Tooltip placement="right" title="工单服务工单工单服务工单">
                                 <div style={{
@@ -31,7 +31,7 @@ export default function TunnelListItem() {
                                     fontWeight: 600,
                                     overflow: "hidden",
                                     textOverflow: "ellipsis",
-                                    width: 110,
+                                    width: 120,
                                     cursor: 'pointer'
                                 }}>
                                     工单服务工单工单服务工单
