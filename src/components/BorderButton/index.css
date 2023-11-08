@@ -1,0 +1,14 @@
+.border-button-container {
+    width: 65px;
+    height: 28px;
+    border: 2px #060C21 solid;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.border-button-container:hover {
+    background-color: #939393;
+}
