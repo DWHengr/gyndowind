@@ -1,0 +1,10 @@
+.text-input {
+    outline: none;
+    border: none;
+    width: 130px;
+    color: rgb(213, 213, 213);
+    background: #474747;
+    padding: 3px;
+    border-radius: 3px;
+    box-shadow: inset 2px 2px 4px rgba(35, 35, 35, 0.9), inset -2px -2px 4px rgba(122, 122, 122, 0.5);
+}
