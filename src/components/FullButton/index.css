@@ -1,0 +1,20 @@
+.full-button-container {
+    width: 200px;
+    height: 40px;
+    background: #060C21;
+    margin: 35px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.full-button-container:hover {
+    padding: 5px;
+    box-sizing: border-box;
+    background: rgba(6, 12, 33, 0.9);
+    border: 1px #ffffff solid;
+}
