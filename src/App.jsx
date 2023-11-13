@@ -8,8 +8,23 @@ import {CloseOutlined, MinusOutlined, UserOutlined} from "@ant-design/icons";
 import ButtonIcon from "./components/ButtonIcon/index.jsx";
 import {appWindow} from '@tauri-apps/api/window'
 import OptionListPopover from "./components/OptionListPopover/index.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {clearUser} from "./store/user/action.js";
 
 function App() {
+
+    const userDate = useSelector((state) => state.userData);
+
+    function PrivateRoute({component: Component, ...rest}) {
+        const dispatch = useDispatch();
+        const token = localStorage.getItem("token");
+        if (!token) dispatch(clearUser());
+        return (<Route
+            {...rest}
+            render={(props) => token ? <Component {...props} /> : <Redirect to="/login"/>}
+        />);
+    }
+
     const NavigationBar = () => {
         return (<div data-tauri-drag-region className="navigation-bar">
             <div style={{
@@ -26,16 +41,18 @@ function App() {
                 </div>
             </div>
             <div style={{justifyContent: 'end', display: "flex", alignItems: 'center'}}>
-                <OptionListPopover
-                    titleContent={<div>悟空</div>}
-                    options={[{
-                        label: 'key1', onClick: () => console.log(2)
-                    }, {
-                        label: 'key1', onClick: () => console.log(2)
-                    }]}
-                >
-                    <Avatar style={{margin: 8}} size={38} icon={<UserOutlined/>}/>
-                </OptionListPopover>
+                {userDate.isLogin &&
+                    <OptionListPopover
+                        titleContent={<div>悟空</div>}
+                        options={[{
+                            label: 'key1', onClick: () => console.log(2)
+                        }, {
+                            label: 'key1', onClick: () => console.log(2)
+                        }]}
+                    >
+                        <Avatar style={{margin: 8}} size={38} icon={<UserOutlined/>}/>
+                    </OptionListPopover>
+                }
                 <ButtonIcon
                     icon={<MinusOutlined style={{fontSize: 25, color: "#060C21"}}/>}
                     onClick={() => {
@@ -52,18 +69,20 @@ function App() {
         </div>)
     }
 
-    return (<AppAntd>
-        <div className="main-container">
-            <NavigationBar/>
-            <div className="content-container">
-                <Switch>
-                    <Route path="/home" component={Home}></Route>
-                    <Route path="/login" component={Login}></Route>
-                    <Redirect path="/" to="/login"/>
-                </Switch>
+    return (
+        <AppAntd>
+            <div className="main-container">
+                <NavigationBar/>
+                <div className="content-container">
+                    <Switch>
+                        <PrivateRoute exact path="/home" component={Home}></PrivateRoute>
+                        <Route path="/login" component={Login}></Route>
+                        <Redirect path="/" to="/home"/>
+                    </Switch>
+                </div>
             </div>
-        </div>
-    </AppAntd>)
+        </AppAntd>
+    )
 }
 
 export default App;
