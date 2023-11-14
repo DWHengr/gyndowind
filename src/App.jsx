@@ -15,9 +15,9 @@ import Msg from "./components/Msg/index.jsx";
 function App() {
 
     const userDate = useSelector((state) => state.userData);
+    const dispatch = useDispatch();
 
     function PrivateRoute({component: Component, ...rest}) {
-        const dispatch = useDispatch();
         const token = localStorage.getItem("token");
         if (!token) dispatch(clearUser());
         return (<Route
@@ -44,12 +44,15 @@ function App() {
             <div style={{justifyContent: 'end', display: "flex", alignItems: 'center'}}>
                 {userDate.isLogin &&
                     <OptionListPopover
-                        titleContent={<div>悟空</div>}
+                        titleContent={<div>{userDate.username}</div>}
                         options={[{
-                            label: 'key1', onClick: () => console.log(2)
+                            label: '个人中心', onClick: () => console.log(2)
                         }, {
-                            label: 'key1', onClick: () => console.log(2)
-                        }]}
+                            label: '退出登录', onClick: () => {
+                                dispatch(clearUser());
+                                h.push("/login");
+                            }
+                        },]}
                     >
                         <Avatar style={{margin: 8}} size={38} icon={<UserOutlined/>}/>
                     </OptionListPopover>
