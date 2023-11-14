@@ -6,8 +6,7 @@ import React, {useState} from "react";
 import User from "../../api/user.js";
 import {setUser} from "../../store/user/action.js";
 import {useDispatch} from "react-redux";
-import {CloseCircleTwoTone} from "@ant-design/icons";
-import {App} from "antd";
+import {useMsg} from "../../components/Msg/index.jsx";
 
 export default function Login() {
 
@@ -15,23 +14,15 @@ export default function Login() {
     const [password, setPassword] = useState("");
     const h = useHistory();
     const dispatch = useDispatch();
-    const {message} = App.useApp();
-    const onErrorMsg = (msg) => {
-        message.open({
-            type: 'success',
-            content: msg,
-            duration: 1.2,
-            icon: <CloseCircleTwoTone twoToneColor="#394773FF" style={{fontSize: 20}}/>
-        })
-    }
+    const Msg = useMsg();
 
     const onLogin = () => {
         if (!account) {
-            onErrorMsg("用户名不能为空~")
+            Msg.onErrorMsg("用户名不能为空~")
             return;
         }
         if (!password) {
-            onErrorMsg("密码不能为空~")
+            Msg.onErrorMsg("密码不能为空~")
             return;
         }
         User.login({account, password})
@@ -40,11 +31,11 @@ export default function Login() {
                     dispatch(setUser(res.data.token, res.data.username, res.data.avatar));
                     h.push("/home")
                 } else {
-                    onErrorMsg(res.msg)
+                    Msg.onErrorMsg(res.msg)
                 }
             })
             .catch((e) => {
-                onErrorMsg(e.message)
+                Msg.onErrorMsg(e.message)
             })
     }
 

@@ -1,21 +1,14 @@
 import {Switch, Tooltip} from "antd";
-import {CheckCircleTwoTone, CopyTwoTone} from "@ant-design/icons";
+import {CopyTwoTone} from "@ant-design/icons";
 import React from "react";
 import "./index.css";
 import {CopyToClipboard} from "react-copy-to-clipboard/src";
-import {App} from 'antd';
+import {useMsg} from "../Msg/index.jsx";
 
 export default function TunnelListItem() {
-    const {message} = App.useApp();
+    const Msg = useMsg();
     const onCopy = () => {
-        message.open({
-            type: 'success',
-            content: '复制成功',
-
-            duration: 1.2,
-            icon: <CheckCircleTwoTone twoToneColor="#394773FF" style={{fontSize: 20}}/>
-        })
-
+        Msg.onSucceedMsg("复制成功");
     }
 
     return (

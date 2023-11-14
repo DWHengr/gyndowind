@@ -10,6 +10,7 @@ import {appWindow} from '@tauri-apps/api/window'
 import OptionListPopover from "./components/OptionListPopover/index.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {clearUser} from "./store/user/action.js";
+import Msg from "./components/Msg/index.jsx";
 
 function App() {
 
@@ -71,16 +72,18 @@ function App() {
 
     return (
         <AppAntd>
-            <div className="main-container">
-                <NavigationBar/>
-                <div className="content-container">
-                    <Switch>
-                        <PrivateRoute exact path="/home" component={Home}></PrivateRoute>
-                        <Route path="/login" component={Login}></Route>
-                        <Redirect path="/" to="/home"/>
-                    </Switch>
+            <Msg>
+                <div className="main-container">
+                    <NavigationBar/>
+                    <div className="content-container">
+                        <Switch>
+                            <PrivateRoute exact path="/home" component={Home}></PrivateRoute>
+                            <Route path="/login" component={Login}></Route>
+                            <Redirect path="/" to="/home"/>
+                        </Switch>
+                    </div>
                 </div>
-            </div>
+            </Msg>
         </AppAntd>
     )
 }
