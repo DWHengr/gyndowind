@@ -15,7 +15,7 @@ export default function BorderInput({value, placeholder, type, onChange}) {
                 placeholder={placeholder}
                 onChange={(e) => {
                     setTxtTxtValue(e.target.value)
-                    if (onChange) onChange()
+                    if (onChange) onChange(e.target.value)
                 }}
             ></input>
         </div>
