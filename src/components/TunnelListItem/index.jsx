@@ -5,7 +5,7 @@ import "./index.css";
 import {CopyToClipboard} from "react-copy-to-clipboard/src";
 import {useMsg} from "../Msg/index.jsx";
 
-export default function TunnelListItem() {
+export default function TunnelListItem({item, serviceIp, checked}) {
     const Msg = useMsg();
     const onCopy = () => {
         Msg.onSucceedMsg("复制成功");
@@ -13,11 +13,11 @@ export default function TunnelListItem() {
 
     return (
         <>
-            <div className="tunnel-list-item">
+            <div className={`tunnel-list-item ${checked ? "tunnel-list-item-checked" : ""}`}>
                 <div style={{marginRight: 10, marginLeft: 10, width: "100%", display: "flex"}}>
                     <div style={{width: 370}}>
                         <div style={{display: "flex", alignItems: 'center'}}>
-                            <Tooltip placement="right" title="工单服务工单工单服务工单">
+                            <Tooltip placement="right" title={item.remark}>
                                 <div style={{
                                     fontSize: 18,
                                     whiteSpace: "nowrap",
@@ -27,7 +27,7 @@ export default function TunnelListItem() {
                                     width: 120,
                                     cursor: 'pointer'
                                 }}>
-                                    工单服务工单工单服务工单
+                                    {item.remark}
                                 </div>
                             </Tooltip>
                             <div style={{
@@ -35,24 +35,24 @@ export default function TunnelListItem() {
                                 color: '#060c21',
                                 marginLeft: 8
                             }}>
-                                外网IP:192.123.12.1
+                                外网IP:{serviceIp}
                             </div>
                             <div style={{
                                 fontSize: 12,
                                 color: '#5d5f63',
                                 marginLeft: 8
                             }}>
-                                外网端口:34999
+                                外网端口:{item.port}
                             </div>
-                            <CopyToClipboard text="测试数据111" onCopy={onCopy}>
+                            <CopyToClipboard text={`${serviceIp}:${item.port}`} onCopy={onCopy}>
                                 <div style={{marginLeft: 5, cursor: 'pointer'}}>
                                     <CopyTwoTone twoToneColor="#5d5f63"/>
                                 </div>
                             </CopyToClipboard>
                         </div>
                         <div style={{verticalAlign: 'bottom', marginTop: 10}}>
-                            <span>内网IP：192.123.12.1</span>
-                            <span style={{marginLeft: 15}}>内网端口：8080</span>
+                            <span>内网IP：{item.target.targetStr.split(':')[0]}</span>
+                            <span style={{marginLeft: 15}}>内网端口：{item.target.targetStr.split(':')[1]}</span>
                         </div>
                     </div>
                     <div style={{
@@ -63,7 +63,8 @@ export default function TunnelListItem() {
                         <div>
                             <Switch checkedChildren="启用"
                                     unCheckedChildren="关闭"
-                                    defaultChecked/>
+                                    defaultChecked={item.status}
+                            />
                         </div>
                     </div>
                 </div>
