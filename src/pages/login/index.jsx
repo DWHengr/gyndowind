@@ -28,7 +28,7 @@ export default function Login() {
         User.login({account, password})
             .then((res) => {
                 if (res.code === 0) {
-                    dispatch(setUser(res.data.token, res.data.username, res.data.avatar));
+                    dispatch(setUser(res.data.token, res.data.username, res.data.avatar, res.data.serviceIp));
                     h.push("/home")
                 } else {
                     Msg.onErrorMsg(res.msg)
