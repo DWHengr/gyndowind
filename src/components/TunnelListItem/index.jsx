@@ -32,7 +32,7 @@ export default function TunnelListItem({item, serviceIp, checked}) {
                             </Tooltip>
                             <div style={{
                                 fontSize: 12,
-                                color: '#060c21',
+                                color: '#5d5f63',
                                 marginLeft: 8
                             }}>
                                 外网IP:{serviceIp}
