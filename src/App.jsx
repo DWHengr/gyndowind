@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./App.css";
 import Home from "./pages/home/index.jsx";
 import Login from "./pages/login/index.jsx";
@@ -9,13 +9,17 @@ import ButtonIcon from "./components/ButtonIcon/index.jsx";
 import {appWindow} from '@tauri-apps/api/window'
 import OptionListPopover from "./components/OptionListPopover/index.jsx";
 import {useDispatch, useSelector} from "react-redux";
-import {clearUser} from "./store/user/action.js";
+import {clearUser, initUser} from "./store/user/action.js";
 import Msg from "./components/Msg/index.jsx";
 
 function App() {
 
     const userDate = useSelector((state) => state.userData);
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(initUser());
+    }, [])
 
     function PrivateRoute({component: Component, ...rest}) {
         const token = localStorage.getItem("token");
