@@ -1,6 +1,7 @@
 import "./index.css"
 import TunnelListItem from "../TunnelListItem/index.jsx";
 import {useEffect, useState} from "react";
+import _ from 'lodash';
 
 export default function TunnelList({list, serviceIp, onChecked}) {
     const [checked, setChecked] = useState(0);
@@ -8,7 +9,7 @@ export default function TunnelList({list, serviceIp, onChecked}) {
     useEffect(() => {
         if (list && list.length > 0) {
             setChecked(list[0].id)
-            if (onChecked) onChecked(list[0])
+            if (onChecked) onChecked(_.cloneDeep(list[0]))
         }
     }, [list])
 
@@ -16,7 +17,7 @@ export default function TunnelList({list, serviceIp, onChecked}) {
         {list?.map(v => {
             return (<div onClick={() => {
                 setChecked(v.id)
-                if (onChecked) onChecked(v);
+                if (onChecked) onChecked(_.cloneDeep(v));
             }}>
                 <TunnelListItem checked={checked === v.id} serviceIp={serviceIp} key={v.id} item={v}/>
             </div>)
