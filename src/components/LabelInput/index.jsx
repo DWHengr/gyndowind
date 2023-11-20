@@ -17,7 +17,7 @@ export default function LabelInput({children, value, onChange, readOnly = true})
                         value={txtValue}
                         onChange={(e) => {
                             setTxtTxtValue(e.target.value)
-                            if (onChange) onChange()
+                            if (onChange) onChange(e.target.value)
                         }}
                     ></input>
                 }
