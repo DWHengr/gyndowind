@@ -6,7 +6,10 @@ export default {
     },
 
     editTunnel(param) {
-        console.log(param)
         return Http.post("/api/tunnel/edit", param);
+    },
+
+    startTunnel(param) {
+        return Http.post("/api/tunnel/start", param);
     }
 };

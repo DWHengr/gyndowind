@@ -63,9 +63,27 @@ export default function Home() {
             })
     }
 
+    const onSwitchTunnel = (checked, item) => {
+        if (checked) {
+            Tunnel.startTunnel({
+                tunnelId: item.id,
+            }).then(res => {
+                if (res.code === 0) {
+                    Msg.onSucceedMsg("启动成功~")
+                    getTunnelList()
+                } else {
+                    Msg.onErrorMsg(res.msg)
+                }
+            }).catch(e => {
+                Msg.onErrorMsg(e.message)
+            })
+        }
+    }
+
     return (<div className="home-container">
         <div className="left-container">
             <div style={{margin: "15px 10px 15px 20px"}}>
+                {!tunnels.length && <Empty style={{marginTop: 80}} description="暂无隧道..." image="./empty.svg"/>}
                 <div style={{display: "flex", justifyContent: 'space-between'}}>
                     <div>内网穿透（{tunnels.length}）</div>
                     <div style={{display: "flex", marginRight: 20}}>
@@ -80,12 +98,12 @@ export default function Home() {
                         />
                     </div>
                 </div>
-                {!tunnels.length && <Empty style={{marginTop: 80}} description="暂无隧道..." image="./empty.svg"/>}
                 <div style={{overflowY: 'scroll', height: 360}}>
                     {tunnels.length > 0 && <TunnelList
                         onChecked={(v) => setCurrentTunnel(v)}
                         list={tunnels}
                         serviceIp={userDate.serviceIp}
+                        onSwitch={(checked, item) => onSwitchTunnel(checked, item)}
                     />}
                 </div>
             </div>
