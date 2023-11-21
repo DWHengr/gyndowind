@@ -3,7 +3,7 @@ import TunnelListItem from "../TunnelListItem/index.jsx";
 import {useEffect, useState} from "react";
 import _ from 'lodash';
 
-export default function TunnelList({list, serviceIp, onChecked}) {
+export default function TunnelList({list, serviceIp, onChecked, onSwitch}) {
     const [checked, setChecked] = useState(0);
 
     useEffect(() => {
@@ -19,7 +19,14 @@ export default function TunnelList({list, serviceIp, onChecked}) {
                 setChecked(v.id)
                 if (onChecked) onChecked(_.cloneDeep(v));
             }}>
-                <TunnelListItem checked={checked === v.id} serviceIp={serviceIp} key={v.id} item={v}/>
+                <TunnelListItem
+                    checked={checked === v.id}
+                    serviceIp={serviceIp} key={v.id}
+                    item={v}
+                    onSwitch={(checked, item) => {
+                        if (onSwitch) onSwitch(checked, item)
+                    }}
+                />
             </div>)
         })}
     </div>)
