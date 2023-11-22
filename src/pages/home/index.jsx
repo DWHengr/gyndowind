@@ -154,5 +154,9 @@ export default function Home() {
                 </div>
             </div>
         </div>}
+        <div style={{position: "absolute", right: 10, bottom: 10, display: "flex", justifyContent: "center"}}>
+            <img style={{height: 18, marginRight: 2}} src="/online.svg"/>
+            <div style={{color: "#173757"}}>连接成功：127.0.0.1</div>
+        </div>
     </div>);
 }
