@@ -77,6 +77,19 @@ export default function Home() {
             }).catch(e => {
                 Msg.onErrorMsg(e.message)
             })
+        } else {
+            Tunnel.stopTunnel({
+                tunnelId: item.id,
+            }).then(res => {
+                if (res.code === 0) {
+                    Msg.onSucceedMsg("关闭成功~")
+                    getTunnelList()
+                } else {
+                    Msg.onErrorMsg(res.msg)
+                }
+            }).catch(e => {
+                Msg.onErrorMsg(e.message)
+            })
         }
     }
 
