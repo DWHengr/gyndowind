@@ -15,5 +15,9 @@ export default {
 
     stopTunnel(param) {
         return Http.post("/api/tunnel/stop", param);
+    },
+
+    delTunnel(param) {
+        return Http.post("/api/tunnel/del", param);
     }
 };

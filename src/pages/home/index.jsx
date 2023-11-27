@@ -93,6 +93,23 @@ export default function Home() {
         }
     }
 
+    const onDelTunnel = () => {
+        Tunnel.delTunnel({
+            tunnelId: currentTunnel.id,
+        })
+            .then(res => {
+                if (res.code === 0) {
+                    Msg.onSucceedMsg("删除成功~")
+                    getTunnelList()
+                } else {
+                    Msg.onErrorMsg(res.msg)
+                }
+            })
+            .catch(e => {
+                Msg.onErrorMsg(e.message)
+            })
+    }
+
     return (<div className="home-container">
         <div className="left-container">
             <div style={{margin: "15px 10px 15px 20px"}}>
@@ -130,7 +147,7 @@ export default function Home() {
                     >
                         保存
                     </BorderButton>
-                    <BorderButton>删除</BorderButton>
+                    <BorderButton onClick={onDelTunnel}>删除</BorderButton>
                 </div>
                 <div style={{marginTop: 10}}>
                     <LabelInput value={userDate.serviceIp}>外网IP：</LabelInput>
