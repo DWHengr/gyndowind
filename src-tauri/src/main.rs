@@ -4,8 +4,8 @@
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 
 use tauri::{
-    AppHandle, CustomMenuItem, Manager, SystemTray, SystemTrayEvent, SystemTrayMenu,
-    SystemTrayMenuItem, Wry,
+    api, AppHandle, CustomMenuItem, GlobalWindowEvent, Manager, SystemTray, SystemTrayEvent,
+    SystemTrayMenu, SystemTrayMenuItem, Wry,
 };
 
 #[derive(Clone, serde::Serialize)]
@@ -14,7 +14,12 @@ struct Payload {
     cwd: String,
 }
 
+mod cmd;
+
+use std::sync::{Arc, Mutex};
+
 fn main() {
+    let process_manager = Arc::new(Mutex::new(cmd::ProcessManager::new()));
     tauri::Builder::default()
         .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| {
             let window = app.get_window("main").unwrap();
@@ -23,10 +28,23 @@ fn main() {
             app.emit_all("single-instance", Payload { args: argv, cwd })
                 .unwrap();
         }))
+        .manage(process_manager)
+        .invoke_handler(tauri::generate_handler![cmd::run_cmd, cmd::close_cmd,])
         .system_tray(SystemTray::new().with_menu(tray_menu()))
         .on_system_tray_event(system_tray_event)
+        .on_window_event(window_event)
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+}
+
+fn window_event(e: GlobalWindowEvent) {
+    match e.event() {
+        tauri::WindowEvent::CloseRequested { api, .. } => {
+            e.window().hide().unwrap();
+            api.prevent_close();
+        }
+        _ => {}
+    }
 }
 
 // tray menu
@@ -56,7 +74,7 @@ fn system_tray_event(app: &AppHandle<Wry>, e: SystemTrayEvent) {
         }
         SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
             "quit" => {
-                std::process::exit(0);
+                app.emit_all("quit", "").unwrap();
             }
             "hide" => {
                 let window = app.get_window("main").unwrap();
