@@ -9,13 +9,14 @@ import {useSelector} from "react-redux";
 import {Empty} from "antd";
 import {PlusOutlined, SyncOutlined} from "@ant-design/icons";
 import TextButton from "../../components/TextButton/index.jsx";
-
+import Dialog from "../../components/Dialog/index.jsx";
 
 export default function Home() {
 
     const userDate = useSelector((state) => state.userData);
     const [tunnels, setTunnels] = useState([]);
     const [currentTunnel, setCurrentTunnel] = useState(null);
+    const [visible, setVisible] = useState(null);
     const Msg = useMsg();
 
     useEffect(() => {
@@ -112,10 +113,15 @@ export default function Home() {
 
     return (<div className="home-container">
         <div className="left-container">
+            <Dialog
+                tip="确认删除?"
+                visible={visible}
+                onVisible={(visible) => setVisible(visible)}
+                onOk={onDelTunnel}
+            />
             <div style={{margin: "15px 10px 15px 20px"}}>
-                {!tunnels.length && <Empty style={{marginTop: 80}} description="暂无隧道..." image="./empty.svg"/>}
                 <div style={{display: "flex", justifyContent: 'space-between'}}>
-                    <div>内网穿透（{tunnels.length}）</div>
+                    <div>内网穿透（{tunnels?.length}）</div>
                     <div style={{display: "flex", marginRight: 20}}>
                         <TextButton icon={<PlusOutlined/>} label="新增"/>
                         <TextButton
@@ -128,8 +134,9 @@ export default function Home() {
                         />
                     </div>
                 </div>
+                {!tunnels?.length && <Empty style={{marginTop: 80}} description="暂无隧道..." image="./empty.svg"/>}
                 <div style={{overflowY: 'scroll', height: 360}}>
-                    {tunnels.length > 0 && <TunnelList
+                    {tunnels?.length > 0 && <TunnelList
                         onChecked={(v) => setCurrentTunnel(v)}
                         list={tunnels}
                         serviceIp={userDate.serviceIp}
@@ -147,7 +154,7 @@ export default function Home() {
                     >
                         保存
                     </BorderButton>
-                    <BorderButton onClick={onDelTunnel}>删除</BorderButton>
+                    <BorderButton onClick={() => setVisible(true)}>删除</BorderButton>
                 </div>
                 <div style={{marginTop: 10}}>
                     <LabelInput value={userDate.serviceIp}>外网IP：</LabelInput>
