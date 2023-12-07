@@ -11,9 +11,14 @@ import OptionListPopover from "./components/OptionListPopover/index.jsx";
 import {useDispatch, useSelector} from "react-redux";
 import {clearUser, initUser} from "./store/user/action.js";
 import Msg from "./components/Msg/index.jsx";
+import {closeCmd} from "./utils/cmd.js";
+import {listen} from '@tauri-apps/api/event'
+
+await listen('quit', (event) => {
+    closeCmd()
+})
 
 function App() {
-
     const userDate = useSelector((state) => state.userData);
     const dispatch = useDispatch();
 
