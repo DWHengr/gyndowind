@@ -60,12 +60,13 @@ pub fn run_cmd(
     process_manager: tauri::State<Arc<Mutex<ProcessManager>>>,
     service_ip: String,
     v_key: String,
-) {
+) -> i32 {
     let mut manager = process_manager.lock().unwrap();
     manager.close_cmd("gyndowind").expect("failed to close cmd");
     manager
         .run_cmd_background("gyndowind", service_ip, v_key)
         .expect("failed to run cmd");
+    0
 }
 
 #[tauri::command]
