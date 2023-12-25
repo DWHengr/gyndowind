@@ -15,10 +15,12 @@ export default function TunnelList({list, serviceIp, onChecked, onSwitch}) {
 
     return (<div>
         {list?.map(v => {
-            return (<div onClick={() => {
-                setChecked(v.id)
-                if (onChecked) onChecked(_.cloneDeep(v));
-            }}>
+            return (<div
+                key={v.id}
+                onClick={() => {
+                    setChecked(v.id)
+                    if (onChecked) onChecked(_.cloneDeep(v));
+                }}>
                 <TunnelListItem
                     checked={checked === v.id}
                     serviceIp={serviceIp} key={v.id}
